@@ -1,23 +1,18 @@
 ﻿open System
 open System.Diagnostics
 
-let Rng : Random = new Random 42
-
 type Tree = {
     mutable Left : Option<Tree>
     mutable Right : Option<Tree>
     Payload : int
 }
 
-let rec TreeBuild(self : Tree) (depth : int) : Tree =
+let rec TreeBuild(depth : int) : Tree =
     let t : Tree = { Left = None; Right = None; Payload = depth }
     if depth > 0 then
-        t.Left <- Some(TreeBuild t (depth - 1))
-        t.Right <- Some(TreeBuild t (depth - 1))
+        t.Left <- Some(TreeBuild (depth - 1))
+        t.Right <- Some(TreeBuild (depth - 1))
     t
-
-let TreeBuildTree (self : Tree) =
-    TreeBuild self (Rng.Next(4, 15))
 
 let rec TreeSum (self : Tree) =
     let l = 
@@ -48,8 +43,7 @@ let Work (iterations : int) =
     let forest : Tree[] = Array.zeroCreate iterations
     let rec acc i count = 
         if i < iterations then
-            let t : Tree = { Left = None; Right = None; Payload = 0 }
-            forest[i] <- TreeBuildTree t
+            forest[i] <- TreeBuild (4 + ((i * 7) % 11))
             MutateArray bigArray i
             acc (i + 1) (count + TreeSum(forest[i]))
         else
@@ -58,17 +52,13 @@ let Work (iterations : int) =
 
 [<EntryPoint>]
 let main args = 
-    printfn "Starting F# benchmark..."
     let iterations : int = 
         if args.Length > 0 then 
             Int32.Parse(args[0])
         else 10
 
-    let sw = Stopwatch.StartNew()
     let checksum = Work iterations
-    sw.Stop()
-    printfn $"{iterations} iterations in {sw.Elapsed.TotalSeconds:F2}s"
-    printfn $"checksum = {checksum}"
+    // printfn $"checksum = {checksum}"
     0
 
 

@@ -1,16 +1,10 @@
 ﻿using System.Diagnostics;
 
 class Program {
-    static Random Rng = new Random(42);
-
     static int Main(string[] args) {
-	System.Console.Write("Starting C# benchmark...\n");
         int iterations = args.Length > 0 && int.TryParse(args[0], out int n) ? n : 10;
-        var sw = Stopwatch.StartNew();
         long checksum = Work(iterations);
-        sw.Stop();
-        Console.WriteLine($"{iterations} iterations in {sw.Elapsed.TotalSeconds:F2}s");
-        Console.WriteLine($"checksum = {checksum}");
+        // Console.WriteLine($"checksum = {checksum}");
         return 0;
     }
 
@@ -21,7 +15,7 @@ class Program {
         long acc = 0;
 
         for (int i = 0; i < iterations; i++) {
-            forest[i] = Tree.BuildTree();
+            forest[i] = Tree.Build(4 + ((i * 7) % 11));
             MutateArray(bigArray, i);
             acc += forest[i].Sum();
         }
@@ -32,11 +26,7 @@ class Program {
         public Tree? Left, Right;
         public int Payload;
 
-        public static Tree BuildTree() {
-            return Build(Rng.Next(4, 15));
-        }
-
-        private static Tree Build(int depth) {
+        public static Tree Build(int depth) {
             var t = new Tree { Payload = depth };
             if (depth > 0) {
                 t.Left = Build(depth - 1);
@@ -57,7 +47,6 @@ class Program {
         int step = 97;
         int i = 0;
         for (int count = 0; count < len; count++) {
-            // a[i] ^= iterationSeed + i;
             a[i] += iterationSeed + i;
             i = (i + step) % len;
         }

@@ -45,6 +45,7 @@ char *str_join(char *const str_array[]) {
 	return result;
 }
 
+// Purposefully suppresses stdout!
 double run_command(char *const args[], const char *dir) {
 	chdir(dir);
 	pid_t pid = fork();

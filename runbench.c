@@ -19,7 +19,7 @@
 #define GO_ARGS "-ldflags=-s -w", "-gcflags=-l=4 -B -C"
 #define OCAML_ARGS "--profile", "release"
 
-#define ITERATIONS "100"
+#define ITERATIONS "1000"
 
 bool exists_dotnet = false,
 	 exists_dmd = false,
@@ -100,6 +100,7 @@ void run_benchmarks() {
 	printf("C# bench time: %fs\n", cs_benchtime);
 	printf("F# bench time: %fs\n", fs_benchtime);
 	printf("OCaml bench time: %fs\n", ocaml_benchtime);
+	printf("Benchmarks finished with '%s' iterations each", ITERATIONS);
 }
 
 int main(int argv, const char **argc) {

@@ -2,23 +2,6 @@
 
 A bunch of benchmarks for GCed languages.
 
-Requires a C compiler (I am using `gcc`) to run the 'script' that executes all benchmarks.
-
-Besides a C compiler, the following tools are required for the different benchmarks. If one is missing, the relevant benchmark will be skipped.
-
-**D**:
-- `dmd`
-
-**Go**:
-- `go`
-
-**C#/F#**:
-- `dotnet` (10.0)
-
-**OCaml**:
-- `opam`
-- `dune` (`opam install dune`)
-
 ## Recent results 
 
 ### 1000 iteraions, 1 loop
@@ -41,6 +24,23 @@ OCaml bench time: 6.446346s
 ```
 
 ## Running
+
+Requires a C compiler (I am using `gcc`) to run the 'script' that executes all benchmarks.
+
+Besides a C compiler, the following tools are required for the different benchmarks. If one is missing, the relevant benchmark will be skipped.
+
+**D**:
+- `dmd`
+
+**Go**:
+- `go`
+
+**C#/F#**:
+- `dotnet` (10.0)
+
+**OCaml**:
+- `opam`
+- `dune` (`opam install dune`)
 
 The run script takes in the following parameters:
 ```

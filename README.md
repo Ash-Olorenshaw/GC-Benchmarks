@@ -2,45 +2,55 @@
 
 A bunch of benchmarks for GCed languages.
 
-Last results:
+## Recent results 
+
+### 1000 iteraions, 1 loop
 ```
 D bench time: 72.348683s
 Go bench time: 79.035944s
 C# bench time: 61.291214s
 F# bench time: 60.237122s
 OCaml bench time: 92.400584s
-Benchmarks finished with '1000' iterations each
 ```
 
-Second-last run results:
+### 100 times, 100 iterations
 ```
-D bench time: 66.280061s
-Go bench time: 66.965441s
-C# bench time: 59.955868s
-F# bench time: 58.816417s
-OCaml bench time: 84.978751s
-Benchmarks finished with '1000' iterations each
+AVERAGE TIMES:
+D bench time: 4.820940s
+Go bench time: 5.404200s
+C# bench time: 4.493315s
+F# bench time: 4.373591s
+OCaml bench time: 6.446346s
 ```
 
 ## Running
 
+The run script takes in the following parameters:
+```
+ITERATIONS      How many internal iterations each benchmark will do. 
+                The larger the number the more stress on the garbage 
+                collector, and the longer each benchmark will run over.
+
+LOOPS           The number of times all benchmarks will be run
+```
+
 If you are using a Posix shell (Bash, Dash, Zsh, etc) then just do the following
-```bash
+```zsh
 # make script executable
 chmod +x ./runbench.c
 
 # run
-./runbench.c
+./runbench.c --loops [LOOPS] --iterations [ITERATIONS]
 ```
 
 If you aren't using a Posix compliant shell (Pwsh, Fish, NuShell) you can either do:
 ```
-bash ./runbench.c
+bash ./runbench.c --loops [LOOPS] --iterations [ITERATIONS]
 ```
 
 Or the following:
 
-```bash
+```sh
 # gcc is not necessary, just for example
 # compile
 gcc ./runbench.c ./scripts/utils.c -o ./runbench
@@ -49,5 +59,5 @@ gcc ./runbench.c ./scripts/utils.c -o ./runbench
 chmod +x ./runbench
 
 # run
-./runbench
+./runbench --loops [LOOPS] --iterations [ITERATIONS]
 ```

@@ -3,18 +3,7 @@ import std.datetime.stopwatch : StopWatch, AutoStart;
 import std.random : Random, uniform;
 import std.conv : to;
 import std.format : format;
-
-void main(string[] args) {
-    int iterations = 10;
-    if (args.length > 1) {
-        try {
-            iterations = args[1].to!int;
-        } catch (Exception e) {}
-    }
-
-    long checksum = work(iterations);
-    // writefln("checksum = %d", checksum);
-}
+import std.exception;
 
 long work(int iterations) {
     enum int ArraySize = 5_000_000;
@@ -34,7 +23,7 @@ class Tree {
     Tree left, right;
     int payload;
 
-    private static Tree build(int depth) {
+    static Tree build(int depth) {
         auto t = new Tree();
         t.payload = depth;
         if (depth > 0) {
@@ -59,5 +48,14 @@ void mutateArray(int[] a, int iterationSeed) {
         a[i] += iterationSeed + i;
         i = (i + step) % len;
     }
+}
+
+void main(string[] args) {
+    int iterations = 10;
+    if (args.length > 1)
+        iterations = args[1].to!int.ifThrown(10);
+
+    long checksum = work(iterations);
+    // writefln("checksum = %d", checksum);
 }
 

@@ -15,7 +15,6 @@ func main() {
 	}
 
 	checksum := work(iterations)
-
 	// fmt.Printf("checksum = %d\n", checksum)
 }
 

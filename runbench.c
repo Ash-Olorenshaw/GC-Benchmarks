@@ -18,7 +18,7 @@
 
 #define GO_ARGS "-ldflags=-s -w", "-gcflags=-l=4 -B -C"
 
-#define ITERATIONS "10"
+#define ITERATIONS "100"
 
 bool exists_dotnet = false,
 	 exists_dmd = false,
@@ -68,19 +68,17 @@ void run_benchmarks() {
 	double cs_benchtime, fs_benchtime, d_benchtime, go_benchtime;
 	if (exists_dmd) {
 		run_benchmark("./bench", "./D", "D", &d_benchtime);
-		chdir("..");
 	}
 
 	if (exists_go) {
 		run_benchmark("./bench", "./Go", "Go", &go_benchtime);
-		chdir("..");
 	}
 
 	if (exists_dotnet) {
 		run_benchmark("./CSharp", "./CSharp/bin/Release/net10.0/linux-x64", "C#", &cs_benchtime);
-		chdir("../../../../..");
+		chdir("../../../..");
 		run_benchmark("./FSharp", "./FSharp/bin/Release/net10.0/linux-x64", "F#", &fs_benchtime);
-		chdir("../../../../..");
+		chdir("../../../..");
 	}
 
 	printf("\n");

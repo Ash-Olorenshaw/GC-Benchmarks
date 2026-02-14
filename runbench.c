@@ -17,12 +17,14 @@
 	"-release", "-inline", "-boundscheck=off", "-mcpu=native"
 
 #define GO_ARGS "-ldflags=-s -w", "-gcflags=-l=4 -B -C"
+#define OCAML_ARGS "--profile", "release"
 
 #define ITERATIONS "100"
 
 bool exists_dotnet = false,
 	 exists_dmd = false,
-	 exists_go = false;
+	 exists_go = false,
+	 exists_opam = false;
 
 void build_benchmark(char *args[], const char *path, const char *name) {
 	printf("\nBuilding %s benchmark\n", name);
@@ -54,6 +56,13 @@ void build_benchmarks() {
 	else
 		printf("\n\nCommand 'dotnet' does not exist.\nSkipping C# and F# benchmarks.\n\n");
 
+	if (exists_opam) {
+		char *build_args[] = { "opam", "exec", "--", "dune", "build", OCAML_ARGS, NULL };
+		build_benchmark(build_args, "./OCaml", "OCaml");
+	}
+	else
+		printf("\n\nCommand 'opam' does not exist.\nSkipping OCaml benchmark.\n\n");
+
 }
 
 void run_benchmark(char *bin_name, const char *dir, const char *name, double *benchtime) {
@@ -65,7 +74,7 @@ void run_benchmark(char *bin_name, const char *dir, const char *name, double *be
 }
 
 void run_benchmarks() {
-	double cs_benchtime, fs_benchtime, d_benchtime, go_benchtime;
+	double cs_benchtime, fs_benchtime, d_benchtime, go_benchtime, ocaml_benchtime;
 	if (exists_dmd) {
 		run_benchmark("./bench", "./D", "D", &d_benchtime);
 	}
@@ -81,17 +90,23 @@ void run_benchmarks() {
 		chdir("../../../..");
 	}
 
+	if (exists_opam) {
+		run_benchmark("./_build/default/bin/main.exe", "./OCaml", "OCaml", &ocaml_benchtime);
+	}
+
 	printf("\n");
 	printf("D bench time: %fs\n", d_benchtime);
 	printf("Go bench time: %fs\n", go_benchtime);
 	printf("C# bench time: %fs\n", cs_benchtime);
 	printf("F# bench time: %fs\n", fs_benchtime);
+	printf("OCaml bench time: %fs\n", ocaml_benchtime);
 }
 
 int main(int argv, const char **argc) {
 	exists_dotnet = command_exists("dotnet");
 	exists_dmd = command_exists("dmd");
 	exists_go = command_exists("go");
+	exists_opam = command_exists("opam");
 	
 	build_benchmarks();
 	run_benchmarks();

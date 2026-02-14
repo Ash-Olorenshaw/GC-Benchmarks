@@ -1,4 +1,7 @@
-bin
+FSharp/bin
+CSharp/bin
+_build
+lib
 obj
 bench
 bench.o

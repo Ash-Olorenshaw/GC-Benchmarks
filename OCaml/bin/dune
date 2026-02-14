@@ -1,0 +1,11 @@
+(executable
+ (public_name OCaml)
+ (name main)
+ (libraries OCaml))
+
+(env
+ (dev
+  (flags (:standard)))
+ (release
+  (ocamlopt_flags (:standard -O3))))
+

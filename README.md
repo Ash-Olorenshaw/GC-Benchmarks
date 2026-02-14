@@ -4,23 +4,26 @@ A bunch of benchmarks for GCed languages.
 
 ## Recent results 
 
-### 1000 iteraions, 1 loop
+### 1000 iterations, 1 loop
 ```
-D bench time: 72.348683s
-Go bench time: 79.035944s
-C# bench time: 61.291214s
-F# bench time: 60.237122s
-OCaml bench time: 92.400584s
+AVERAGE TIMES (sorted fastest first):
+1. C# (time: 30.035224s)
+2. F# (time: 30.533563s)
+3. D (time: 33.514821s)
+4. Go (time: 39.168059s)
+5. OCaml (time: 46.430299s)
+Benchmarks finished with 1 loops and with 1000 iterations each
 ```
 
 ### 100 times, 100 iterations
 ```
-AVERAGE TIMES:
-D bench time: 4.820940s
-Go bench time: 5.404200s
-C# bench time: 4.493315s
-F# bench time: 4.373591s
-OCaml bench time: 6.446346s
+AVERAGE TIMES (sorted fastest first):
+1. C# (time: 3.686345s)
+2. F# (time: 3.783578s)
+3. D (time: 4.105567s)
+4. Go (time: 4.760802s)
+5. OCaml (time: 5.554541s)
+Benchmarks finished with 100 loops and with 100 iterations each
 ```
 
 ## Running
@@ -29,16 +32,16 @@ Requires a C compiler (I am using `gcc`) to run the 'script' that executes all b
 
 Besides a C compiler, the following tools are required for the different benchmarks. If one is missing, the relevant benchmark will be skipped.
 
-**D**:
+**D**
 - `dmd`
 
-**Go**:
+**Go**
 - `go`
 
-**C#/F#**:
+**C#/F#**
 - `dotnet` (10.0)
 
-**OCaml**:
+**OCaml**
 - `opam`
 - `dune` (`opam install dune`)
 

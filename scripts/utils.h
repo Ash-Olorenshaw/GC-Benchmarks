@@ -17,6 +17,6 @@ extern double timer_start_val, timer_stop_val;
 
 bool command_exists(const char *command);
 char *str_join(char *const str_array[]);
-double run_command(char *const args[], const char *dir);
+double run_command(char *const args[], const char *dir, bool no_stdout);
 
 #endif

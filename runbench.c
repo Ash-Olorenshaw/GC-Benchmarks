@@ -17,14 +17,15 @@
 #include "scripts/args.h"
 
 int main(int argv, const char **argc) {
-	const int benchtime_count = 5;
-	double final_benchtimes[5] = {0};
-	const char *final_benchtime_names[5] = { "C#", "F#", "D", "Go", "OCaml" };
+	const int benchtime_count = 6;
+	double final_benchtimes[6] = {0};
+	const char *final_benchtime_names[6] = { "C#", "F#", "D", "Go", "OCaml", "Java" };
 
 	exists_dotnet = command_exists("dotnet");
 	exists_dmd = command_exists("dmd");
 	exists_go = command_exists("go");
 	exists_opam = command_exists("opam");
+	exists_java = command_exists("java") && command_exists("javac");
 	
 	args arguments = { .arg_count = argv, .args = argc };
 
@@ -57,14 +58,28 @@ int main(int argv, const char **argc) {
 		exit(1);
 	}
 
+	int java_compiler_src_pos = arg_pos("--java-compiler", arguments);
+	if (java_compiler_src_pos == -1)
+		printf("Flag '--java-compiler' missing.\n"
+			"Instead of using GraalVM to compile to native code, Java benchmark will\n"
+			"instead compile to Java bytecode and execute using the JVM.\n\n");
+	else if (java_compiler_src_pos < argv) {
+		exists_java_compiler = strdup(argc[java_compiler_src_pos + 1]);
+	}
+	else {
+		printf("Flag '--java-compiler' requires a string value\n");
+		exit(1);
+	}
+
 	printf(">>> Running benchmark %d times, with each benchmark running %s iterations\n", loops, iterations);
 	build_benchmarks();
 
-	double benchtimes[5] = {0};
+	double benchtimes[6] = {0};
 	for (int i = 0; i < loops; i++) {
-		printf(">>> Running benchmark loop %d\n", i + 1);
+		if (loops > 1)
+			printf(">>> Running benchmark loop %d\n", i + 1);
 		memset(benchtimes, 0, sizeof benchtimes);
-		run_benchmarks(&benchtimes[0], &benchtimes[1], &benchtimes[2], &benchtimes[3], &benchtimes[4]);
+		run_benchmarks(&benchtimes[0], &benchtimes[1], &benchtimes[2], &benchtimes[3], &benchtimes[4], &benchtimes[5]);
 		for (int b = 0; b < benchtime_count; b++)
 			final_benchtimes[b] += benchtimes[b];
 	}

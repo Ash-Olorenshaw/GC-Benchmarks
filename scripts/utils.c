@@ -45,8 +45,7 @@ char *str_join(char *const str_array[]) {
 	return result;
 }
 
-// Purposefully suppresses stdout!
-double run_command(char *const args[], const char *dir) {
+double run_command(char *const args[], const char *dir, bool no_stdout) {
 	chdir(dir);
 	pid_t pid = fork();
 
@@ -62,13 +61,15 @@ double run_command(char *const args[], const char *dir) {
 		return GET_TIME;
 	}
 	else {
-		int devnull = open("/dev/null", O_WRONLY);
-        dup2(devnull, STDOUT_FILENO);
-        close(devnull);
+		if (no_stdout) {
+			int devnull = open("/dev/null", O_WRONLY);
+			dup2(devnull, STDOUT_FILENO);
+			close(devnull);
+		}
 
 		if (execvp(args[0], args) == -1) {
 			char *arg_str = str_join(args);
-			printf("Error with running command: \n\t%s\n", arg_str);
+			fprintf(stderr, "Error with running command: \n\t%s\n", arg_str);
 			free(arg_str);
 			perror(NULL);
 			exit(1);

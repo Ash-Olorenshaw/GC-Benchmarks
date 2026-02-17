@@ -20,17 +20,21 @@ int loops;
 bool exists_dotnet = false,
 	 exists_dmd = false,
 	 exists_go = false,
-	 exists_opam = false;
+	 exists_opam = false,
+	 exists_java = false;
+char *exists_java_compiler = NULL;
 
 void build_benchmark(char *args[], const char *path, const char *name) {
 	printf(">>> Building %s benchmark.\n", name);
-	run_command(args, path);
+	run_command(args, path, true);
 	chdir("..");
 }
 
 void run_benchmark(char *bin_name, const char *dir, const char *name, double *benchtime) {
+	if (loops < 3)
+		printf(">>> Running %s benchmark.\n", name);
 	char *run_args[] = { bin_name, iterations, NULL };
-	*benchtime = run_command(run_args, dir);
+	*benchtime = run_command(run_args, dir, true);
 	chdir("..");
 }
 
@@ -64,16 +68,28 @@ void build_benchmarks() {
 	else
 		printf("\n\nCommand 'opam' does not exist.\nSkipping OCaml benchmark.\n\n");
 
+	if (exists_java) {
+		char *build_args[] = { "javac", "Benchmark.java", NULL };
+		build_benchmark(build_args, "./Java", "Java");
+		if (exists_java_compiler != NULL) {
+			char *native_compiler = realpath(exists_java_compiler, NULL);
+			char *compiler_args_3[] = { native_compiler, "Benchmark", NULL };
+			run_command(compiler_args_3, "./Java", true);
+			chdir("..");
+			free(native_compiler);
+		}
+	}
+	else 
+		printf("\n\nCommand 'javac' or 'java' does not exist.\nSkipping Java benchmark.\n\n");
+
 }
 
-void run_benchmarks(double *cs_benchtime, double *fs_benchtime, double *d_benchtime, double *go_benchtime, double *ocaml_benchtime) {
-	if (exists_dmd) {
+void run_benchmarks(double *cs_benchtime, double *fs_benchtime, double *d_benchtime, double *go_benchtime, double *ocaml_benchtime, double *java_benchtime) {
+	if (exists_dmd)
 		run_benchmark("./bench", "./D", "D", d_benchtime);
-	}
 
-	if (exists_go) {
+	if (exists_go)
 		run_benchmark("./bench", "./Go", "Go", go_benchtime);
-	}
 
 	if (exists_dotnet) {
 		run_benchmark("./CSharp", "./CSharp/bin/Release/net10.0/linux-x64", "C#", cs_benchtime);
@@ -82,8 +98,15 @@ void run_benchmarks(double *cs_benchtime, double *fs_benchtime, double *d_bencht
 		chdir("../../../..");
 	}
 
-	if (exists_opam) {
+	if (exists_opam)
 		run_benchmark("./_build/default/bin/main.exe", "./OCaml", "OCaml", ocaml_benchtime);
-	}
 
+	if (exists_java) {
+		if (exists_java_compiler == NULL) {
+			char *build_args[] = { "java", "Benchmark", NULL };
+			run_command(build_args, "./Java", true);
+		}
+		else
+			run_benchmark("./benchmark", "./Java", "Java", java_benchtime);
+	}
 }

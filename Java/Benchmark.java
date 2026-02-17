@@ -1,16 +1,15 @@
-import java.util.Random;
-
 public class Benchmark {
     public static void main(String[] args) {
         int iterations = args.length > 0 ? parseIntOrDefault(args[0], 10) : 10;
         long checksum = work(iterations);
-        System.out.println("checksum = " + checksum);
+        // System.out.println("checksum = " + checksum);
     }
 
     private static int parseIntOrDefault(String s, int defaultValue) {
         try {
             return Integer.parseInt(s);
-        } catch (NumberFormatException e) {
+        } 
+		catch (NumberFormatException e) {
             return defaultValue;
         }
     }

@@ -11,15 +11,20 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "scripts/utils.h"
 #include "scripts/sort.h"
 #include "scripts/benchmarks.h"
 #include "scripts/args.h"
+#include "scripts/utils.h"
 
 int main(int argv, const char **argc) {
 	const int benchtime_count = 6;
-	double final_benchtimes[6] = {0};
-	const char *final_benchtime_names[6] = { "C#", "F#", "D", "Go", "OCaml", "Java" };
+	benchmark final_benchtimes[6] = {0};
+	final_benchtimes[0] = (benchmark){ .name = "C#", .time = 0 };
+	final_benchtimes[1] = (benchmark){ .name = "F#", .time = 0 };
+	final_benchtimes[2] = (benchmark){ .name = "D", .time = 0 };
+	final_benchtimes[3] = (benchmark){ .name = "Go", .time = 0 };
+	final_benchtimes[4] = (benchmark){ .name = "OCaml", .time = 0 };
+	final_benchtimes[5] = (benchmark){ .name = "Java", .time = 0 };
 
 	exists_dotnet = command_exists("dotnet");
 	exists_dmd = command_exists("dmd");
@@ -80,18 +85,24 @@ int main(int argv, const char **argc) {
 			printf(">>> Running benchmark loop %d\n", i + 1);
 		memset(benchtimes, 0, sizeof benchtimes);
 		run_benchmarks(&benchtimes[0], &benchtimes[1], &benchtimes[2], &benchtimes[3], &benchtimes[4], &benchtimes[5]);
-		for (int b = 0; b < benchtime_count; b++)
-			final_benchtimes[b] += benchtimes[b];
+		for (int b = 0; b < benchtime_count; b++) {
+			printf("\tBench finished running after: %fs (%d - %s)\n", benchtimes[b], b, final_benchtimes[b].name);
+			final_benchtimes[b].time += benchtimes[b];
+		}
 	}
 
 	for (int b = 0; b < benchtime_count; b++)
-		final_benchtimes[b] /= loops;
+		final_benchtimes[b].time /= loops;
 
-	qsort(final_benchtimes, benchtime_count, sizeof(double), compare_doubles);
+	qsort(final_benchtimes, benchtime_count, sizeof(benchmark), compare_benchmarks);
 
 	printf("\nAVERAGE TIMES (sorted fastest first):\n");
-	for (int i = 0; i < benchtime_count; i++)
-		printf("%d. %s (time: %fs)\n", i + 1, final_benchtime_names[i], final_benchtimes[i]);
+	for (int i = 0; i < benchtime_count; i++) {
+		if (final_benchtimes[i].time == 0)
+			printf("%d. %s (benchmark not run)\n", i + 1, final_benchtimes[i].name);
+		else
+			printf("%d. %s (time: %fs)\n", i + 1, final_benchtimes[i].name, final_benchtimes[i].time);
+	}
 	printf("Benchmarks finished with %d loops and with %s iterations each\n", loops, iterations);
 
 	free(iterations);

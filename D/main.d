@@ -56,6 +56,6 @@ void main(string[] args) {
         iterations = args[1].to!int.ifThrown(10);
 
     long checksum = work(iterations);
-    // writefln("checksum = %d", checksum);
+    writefln("checksum = %d", checksum);
 }
 

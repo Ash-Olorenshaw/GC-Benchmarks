@@ -57,6 +57,6 @@ let () =
             10
     in
     let checksum = work iterations in
-    (* Printf.printf "checksum = %d\n" checksum; *)
+    Printf.printf "checksum = %d\n" checksum;
     ignore checksum
 

@@ -4,7 +4,7 @@ class Program {
     static int Main(string[] args) {
         int iterations = args.Length > 0 && int.TryParse(args[0], out int n) ? n : 10;
         long checksum = Work(iterations);
-        // Console.WriteLine($"checksum = {checksum}");
+        Console.WriteLine($"checksum = {checksum}");
         return 0;
     }
 

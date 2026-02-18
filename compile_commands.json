@@ -1,0 +1,62 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-o",
+      "./runbench",
+      "./runbench.c"
+    ],
+    "directory": "/home/ao/Code/BENCHMARK",
+    "file": "/home/ao/Code/BENCHMARK/runbench.c",
+    "output": "/home/ao/Code/BENCHMARK/runbench"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-o",
+      "./runbench",
+      "./scripts/utils.c"
+    ],
+    "directory": "/home/ao/Code/BENCHMARK",
+    "file": "/home/ao/Code/BENCHMARK/scripts/utils.c",
+    "output": "/home/ao/Code/BENCHMARK/runbench"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-o",
+      "./runbench",
+      "./scripts/args.c"
+    ],
+    "directory": "/home/ao/Code/BENCHMARK",
+    "file": "/home/ao/Code/BENCHMARK/scripts/args.c",
+    "output": "/home/ao/Code/BENCHMARK/runbench"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-o",
+      "./runbench",
+      "./scripts/benchmarks.c"
+    ],
+    "directory": "/home/ao/Code/BENCHMARK",
+    "file": "/home/ao/Code/BENCHMARK/scripts/benchmarks.c",
+    "output": "/home/ao/Code/BENCHMARK/runbench"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-o",
+      "./runbench",
+      "./scripts/sort.c"
+    ],
+    "directory": "/home/ao/Code/BENCHMARK",
+    "file": "/home/ao/Code/BENCHMARK/scripts/sort.c",
+    "output": "/home/ao/Code/BENCHMARK/runbench"
+  }
+]

@@ -58,7 +58,7 @@ let main args =
         else 10
 
     let checksum = Work iterations
-    // printfn $"checksum = {checksum}"
+    printfn $"checksum = {checksum}"
     0
 
 

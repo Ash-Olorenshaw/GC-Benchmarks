@@ -8,6 +8,11 @@ extern int loops;
 extern bool exists_dotnet, exists_dmd, exists_go, exists_opam, exists_java;
 extern char *exists_java_compiler;
 
+typedef struct {
+	const char *name;
+	double time;
+} benchmark;
+
 void build_benchmark(char *args[], const char *path, const char *name);
 void run_benchmark(char *bin_name, const char *dir, const char *name, double *benchtime);
 

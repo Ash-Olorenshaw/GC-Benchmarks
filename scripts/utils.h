@@ -1,6 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <stdbool.h>
+
 extern double timer_start_val, timer_stop_val;
 
 #define GET_TIME timer_stop_val - timer_start_val

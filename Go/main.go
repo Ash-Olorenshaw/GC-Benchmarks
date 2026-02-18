@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
 	"os"
 	"strconv"
 )
@@ -15,8 +15,7 @@ func main() {
 	}
 
 	checksum := work(iterations)
-	_ = checksum
-	// fmt.Printf("checksum = %d\n", checksum)
+	fmt.Printf("checksum = %d\n", checksum)
 }
 
 func work(iterations int) int64 {

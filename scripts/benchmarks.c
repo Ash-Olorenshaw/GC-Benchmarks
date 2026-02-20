@@ -31,10 +31,11 @@ void build_benchmark(char *args[], const char *path, const char *name) {
 }
 
 void run_benchmark(char *bin_name, const char *dir, const char *name, double *benchtime) {
-	if (loops < 3)
-		printf(">>> Running %s benchmark.\n", name);
+	// if (loops < 3)
+	printf(" : Running %s benchmark.\n", name);
 	char *run_args[] = { bin_name, iterations, NULL };
 	*benchtime = run_command(run_args, dir, false);
+	printf(" : \n");
 	chdir("..");
 }
 
@@ -93,10 +94,8 @@ void run_benchmarks(double *cs_benchtime, double *fs_benchtime, double *d_bencht
 
 	if (exists_dotnet) {
 		run_benchmark("./CSharp", "./CSharp/bin/Release/net10.0/linux-x64", "C#", cs_benchtime);
-		printf("\tBench finished running after: %fs\n", *cs_benchtime);
 		chdir("../../../..");
 		run_benchmark("./FSharp", "./FSharp/bin/Release/net10.0/linux-x64", "F#", fs_benchtime);
-		printf("\tBench finished running after: %fs\n", *fs_benchtime);
 		chdir("../../../..");
 	}
 
@@ -105,9 +104,12 @@ void run_benchmarks(double *cs_benchtime, double *fs_benchtime, double *d_bencht
 
 	if (exists_java) {
 		if (exists_java_compiler == NULL) {
-			char *build_args[] = { "java", "Benchmark", NULL };
-			printf(">>> Running Java benchmark.\n");
+			char *build_args[] = { "java", "Benchmark", iterations, NULL };
+			// if (loops < 3)
+			printf(" : Running Java benchmark.\n");
 			*java_benchtime = run_command(build_args, "./Java", false);
+			printf(" : \n");
+			chdir("..");
 		}
 		else
 			run_benchmark("./benchmark", "./Java", "Java", java_benchtime);

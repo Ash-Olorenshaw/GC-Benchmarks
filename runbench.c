@@ -1,6 +1,7 @@
 #if 0 
     gcc "$0" ./scripts/utils.c ./scripts/args.c \
-		./scripts/benchmarks.c ./scripts/sort.c -o ./runbench
+		./scripts/benchmarks.c ./scripts/sort.c -o ./runbench \
+		-Wall -Wextra -pedantic
 	./runbench "$@"
     rm -f ./runbench
     exit
@@ -85,10 +86,8 @@ int main(int argv, const char **argc) {
 			printf(">>> Running benchmark loop %d\n", i + 1);
 		memset(benchtimes, 0, sizeof benchtimes);
 		run_benchmarks(&benchtimes[0], &benchtimes[1], &benchtimes[2], &benchtimes[3], &benchtimes[4], &benchtimes[5]);
-		for (int b = 0; b < benchtime_count; b++) {
-			printf("\tBench finished running after: %fs (%d - %s)\n", benchtimes[b], b, final_benchtimes[b].name);
+		for (int b = 0; b < benchtime_count; b++)
 			final_benchtimes[b].time += benchtimes[b];
-		}
 	}
 
 	for (int b = 0; b < benchtime_count; b++)

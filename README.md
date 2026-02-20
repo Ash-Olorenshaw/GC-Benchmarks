@@ -7,22 +7,24 @@ A bunch of benchmarks for GCed languages.
 ### 1000 iterations, 1 loop
 ```
 AVERAGE TIMES (sorted fastest first):
-1. C# (time: 30.035224s)
-2. F# (time: 30.533563s)
-3. D (time: 33.514821s)
-4. Go (time: 39.168059s)
-5. OCaml (time: 46.430299s)
+1. Java (JVM) (time: 27.954951s)
+2. F# (time: 30.247424s)
+3. C# (time: 34.137420s)
+4. D (time: 38.494007s)
+5. Go (time: 44.312376s)
+6. OCaml (time: 46.043639s)
 Benchmarks finished with 1 loops and with 1000 iterations each
 ```
 
 ### 100 times, 100 iterations
 ```
 AVERAGE TIMES (sorted fastest first):
-1. C# (time: 3.686345s)
-2. F# (time: 3.783578s)
-3. D (time: 4.105567s)
-4. Go (time: 4.760802s)
-5. OCaml (time: 5.554541s)
+1. Java (JVM) (time: 3.249122s)
+2. F# (time: 3.412731s)
+3. C# (time: 3.483818s)
+4. D (time: 3.695640s)
+5. Go (time: 4.302772s)
+6. OCaml (time: 5.085996s)
 Benchmarks finished with 100 loops and with 100 iterations each
 ```
 

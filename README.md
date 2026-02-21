@@ -30,7 +30,7 @@ Benchmarks finished with 100 loops and with 100 iterations each
 
 ## Running
 
-Requires a C compiler (I am using `gcc`) to run the 'script' that executes all benchmarks.
+Requires a C compiler (I use `gcc`) to run the 'script' that executes all benchmarks.
 
 Besides a C compiler, the following tools are required for the different benchmarks. If one is missing, the relevant benchmark will be skipped.
 
@@ -46,6 +46,10 @@ Besides a C compiler, the following tools are required for the different benchma
 **OCaml**
 - `opam`
 - `dune` (`opam install dune`)
+
+**Java**
+- `java`
+- optionally: `graalvm` (downloaded somewhere and the `native-image` binary passed in with the `--java-compiler` flag)
 
 The run script takes in the following parameters:
 ```
@@ -75,7 +79,8 @@ Or the following:
 ```sh
 # gcc is not necessary, just for example
 # compile
-gcc ./runbench.c ./scripts/utils.c -o ./runbench
+gcc ./runbench.c ./scripts/utils.c ./scripts/args.c \
+    ./scripts/benchmarks.c ./scripts/sort.c -o ./runbench
 
 # make executable
 chmod +x ./runbench

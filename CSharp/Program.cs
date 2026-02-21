@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 class Program {
     static int Main(string[] args) {
-        int iterations = args.Length > 0 && int.TryParse(args[0], out int n) ? n : 10;
+        int iterations = args.Length > 0 ? Int32.Parse(args[0]) : 10;
         long checksum = Work(iterations);
         Console.WriteLine($"checksum = {checksum}");
         return 0;

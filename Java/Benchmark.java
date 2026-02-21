@@ -1,17 +1,8 @@
 public class Benchmark {
     public static void main(String[] args) {
-        int iterations = args.length > 0 ? parseIntOrDefault(args[0], 10) : 10;
+        int iterations = args.length > 0 ? Integer.parseInt(args[0]) : 10;
         long checksum = work(iterations);
         System.out.println("checksum = " + checksum);
-    }
-
-    private static int parseIntOrDefault(String s, int defaultValue) {
-        try {
-            return Integer.parseInt(s);
-        } 
-		catch (NumberFormatException e) {
-            return defaultValue;
-        }
     }
 
     private static long work(int iterations) {
